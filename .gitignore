@@ -17,3 +17,6 @@ build/*
 *.exe
 tools/ido71/*
 tools/nOVL/*
+
+# Don't ignore any ".gitkeep" files
+!.gitkeep
