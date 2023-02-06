@@ -1,0 +1,19 @@
+# Object files
+*.o
+*.obj
+*.elf
+
+# Binaries
+*.bin
+*.ovl
+
+# Build directory
+build/*
+
+# Visual Studio Code
+.vscode/*
+
+# Executables and tools
+*.exe
+tools/ido71/*
+tools/nOVL/*
