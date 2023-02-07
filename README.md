@@ -23,3 +23,6 @@ The code in this repository corresponds to the USA v1.0 version of the game.
 * CrookedPoe, z64me: For [z64ovl](https://github.com/CrookedPoe/z64ovl). Although intended for the Zelda 64 games, they provide examples for rebuilding overlays.
 
 * Fluvian: For [LZKN64](https://github.com/Fluvian/lzkn64), which can decompress and compress back files in the Nagano format, used in several Konami N64 games.
+
+## More information:
+* [Castlevania 64 - Research Spreadsheets](https://docs.google.com/spreadsheets/d/1nzh_nFf26oVZy6uWeNYiYGXAto6Yz3xypZwWqwJBBJQ/edit#gid=0)
