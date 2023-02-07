@@ -25,8 +25,7 @@ OPTFLAGS := -O2
 LDFLAGS = -T src/$(OVERLAY_NAME)/linker.ld
 
 # nOVL flags
-NOVL_ENTRYPOINT = 0x0F000000
-NOVLFLAGS = -v -c -A $(NOVL_ENTRYPOINT) -o $(BUILD)/$(OVERLAY_OUT)
+NOVLFLAGS = -v -c -o $(BUILD)/$(OVERLAY_OUT)
 
 default: compile $(OVERLAY_OUT) readelf verify
 
