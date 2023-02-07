@@ -1,3 +1,5 @@
+/* Extern functions addresses go here */
+
 /* include/game/textbox.h */
 textbox_create = 0x8012cb88;
 textbox_setDimensions = 0x8012cd14;
