@@ -15,31 +15,31 @@
 void moduleA3_calc(moduleA3* this) {
     s16 temp;
     
-    temp = this->header.functionLoadMgr_ID + 1;
-    this->header.functionLoadMgr_ID = temp,
+    temp = this->header.functionInfo_ID + 1;
+    this->header.functionInfo_ID = temp,
     this->header.current_function[temp].timer++;
     (*modules_163_164_165_functions[this->header.current_function[temp].function])(this);
-    this->header.functionLoadMgr_ID--;
+    this->header.functionInfo_ID--;
 }
 
 void moduleA4_calc(moduleA4* this) {
     s16 temp;
     
-    temp = this->header.functionLoadMgr_ID + 1;
-    this->header.functionLoadMgr_ID = temp,
+    temp = this->header.functionInfo_ID + 1;
+    this->header.functionInfo_ID = temp,
     this->header.current_function[temp].timer++;
     (*modules_163_164_165_functions[this->header.current_function[temp].function])(this);
-    this->header.functionLoadMgr_ID--;
+    this->header.functionInfo_ID--;
 }
 
 void moduleA5_calc(moduleA5* this) {
     s16 temp;
     
-    temp = this->header.functionLoadMgr_ID + 1;
-    this->header.functionLoadMgr_ID = temp,
+    temp = this->header.functionInfo_ID + 1;
+    this->header.functionInfo_ID = temp,
     this->header.current_function[temp].timer++;
     (*modules_163_164_165_functions[this->header.current_function[temp].function])(this);
-    this->header.functionLoadMgr_ID--;
+    this->header.functionInfo_ID--;
 }
 
 void func_0F000150(void* this) {}

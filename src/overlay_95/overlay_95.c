@@ -8,7 +8,7 @@
  *   It's unknown what its actual purpose is. Either it used to contain some additional code
  *   related to Demon Dracula, or its only purpose is to be a placeholder so that the game
  *   can load the Demon Dracula's assets file.
- * Module ID = 0xB7
+ * Associated modules: 0xB7
  * 
  * osMapTLB'd? = Yes
  * Entrypoint address = 0x0F000000

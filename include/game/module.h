@@ -3,6 +3,11 @@
 
 #include "ultra64/ultratypes.h"
 
+enum ModuleHeader_flags {
+    PAUSE      = (1 << 14),
+    TOP_MODULE = (1 << 15)
+};
+
 typedef struct {
     u8 timer;                      // Could also be "number of accesses to function"
     u8 function;                   // ID within the functions array
@@ -10,17 +15,17 @@ typedef struct {
 
 typedef struct {
     s16 ID;
-    s16 field_0x02;
+    s16 flags;
     s16 field_0x04;
     s16 field_0x06;
     functionInfo current_function[3];
-    s16 functionLoadMgr_ID;
+    s16 functionInfo_ID;
     void (*destroy)(void*);
-    struct ModuleHeader* head_module;
-    struct ModuleHeader* next_module;
-    struct ModuleHeader* field_0x1C;
+    struct ModuleHeader* parent;
+    struct ModuleHeader* next;
+    struct ModuleHeader* child;
 } ModuleHeader;                    // Size = 0x20
 
-extern void goToNextFunc(s8* functionInfo, s16* functionLoadMgr_ID);       // 0x80001448
+extern void goToNextFunc(s8* functionInfo, s16* functionInfo_ID);       // 0x80001448
 
 #endif

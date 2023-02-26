@@ -1,13 +1,13 @@
 /*
  * File: endingMessageEasy.c
  * Description: Displays the ending message when you beat Easy Mode
- * Module ID = 0x140
+ * Associated modules: 0x140
  * 
  * osMapTLB'd? = Yes
  * Entrypoint address = 0x0F000000
- * File info = 0x800963C0
- * Overlay file ID = 0xBB
- * Assets file ID = -
+ * Associated files ptr = 0x800963C0
+ * Associated files:
+ *   0xBB (Overlay)
  */
 
 #include "game/unknown_struct.h"
@@ -21,11 +21,11 @@
 void endingMessageEasy_calc(endingMessageEasy* this) {
     s16 temp;
     
-    temp = this->header.functionLoadMgr_ID + 1;
-    this->header.functionLoadMgr_ID = temp,
+    temp = this->header.functionInfo_ID + 1;
+    this->header.functionInfo_ID = temp,
     this->header.current_function[temp].timer++;
     (*endingMessageEasy_functions[this->header.current_function[temp].function])(this);
-    this->header.functionLoadMgr_ID--;
+    this->header.functionInfo_ID--;
 }
 
 // Initializes the textbox
@@ -58,7 +58,7 @@ void endingMessageEasy_init(endingMessageEasy* this) {
     text_ptr = (s32)ptr_text_getMessageFromPool(ending_text, 0) & 0xFFFFFF;
     ptr_textbox_setMessagePtr(new_textbox, (s32)file_buffer + text_ptr, 0, 0);
     ptr_textbox_8012cda4(new_textbox, 0x40035, 30);
-    ptr_goToNextFunc((s8*)this->header.current_function, &this->header.functionLoadMgr_ID);
+    ptr_goToNextFunc((s8*)this->header.current_function, &this->header.functionInfo_ID);
 }
 
 // Unused
@@ -72,7 +72,7 @@ void endingMessageEasy_loop(endingMessageEasy* this) {
     u32* textbox_flags = &this->ending_textbox->flags;
     
     void (*D_80040570)() = func_80040570;
-    void (*ptr_goToNextFunc)(s8* functionLoadMgr, s16* functionLoadMgr_ID) = goToNextFunc;
+    void (*ptr_goToNextFunc)(s8* functionLoadMgr, s16* functionInfo_ID) = goToNextFunc;
 
     this->active_time++;
     /* After 120 frames have passed (the time it takes for the red cursor to appear),
@@ -80,7 +80,7 @@ void endingMessageEasy_loop(endingMessageEasy* this) {
      * in the gameplay's save struct, and destroy this module.
      */
     if ((this->active_time > 120) && (D_80383AB8.controllers[0].buttons_pressed & A_BUTTON)) {
-        *textbox_flags |= 0x04000000;
+        *textbox_flags |= CLOSE_TEXTBOX;
         D_80383AB8.SaveStruct_gameplay.money = 0;
         D_80383AB8.SaveStruct_gameplay.time_saved_counter = 0;
         D_80383AB8.SaveStruct_gameplay.death_counter = 0;
@@ -120,7 +120,7 @@ void endingMessageEasy_loop(endingMessageEasy* this) {
         }
         D_80040570();
         this->active_time = 0;
-        ptr_goToNextFunc((s8*)this->header.current_function, &this->header.functionLoadMgr_ID);
+        ptr_goToNextFunc((s8*)this->header.current_function, &this->header.functionInfo_ID);
     }
 }
 
@@ -133,8 +133,8 @@ void endingMessageEasy_destroy(endingMessageEasy* this) {
     if (this->active_time > 30) {
         textbox_flags = this->ending_textbox->flags;
         if (!(textbox_flags & 0x20000000) && !(textbox_flags & 0x10000000) && !(textbox_flags & 0x02000000)) {
-            if (!(textbox_flags & 0x40000000)) {
-                this->ending_textbox->flags = textbox_flags | 0x04000000;
+            if (!(textbox_flags & TEXTBOX_IS_ACTIVE)) {
+                this->ending_textbox->flags = textbox_flags | CLOSE_TEXTBOX;
             }
             this->header.destroy(this);
         }

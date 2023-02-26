@@ -4,6 +4,14 @@
 #include "ultra64/ultratypes.h"
 #include "game/math.h"
 
+enum textbox_flags {
+    SLOW_TEXT_TRANSITION = (1 << 20),
+    FAST_TEXT_TRANSITION = (1 << 21),
+    CLOSE_TEXTBOX        = (1 << 26),
+    OPEN_TEXTBOX         = (1 << 27),
+    TEXTBOX_IS_ACTIVE    = (1 << 30)
+};
+
 typedef struct {
     u32 flags;
     void* field1_0x4;
