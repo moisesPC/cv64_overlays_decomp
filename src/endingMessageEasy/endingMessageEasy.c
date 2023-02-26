@@ -46,7 +46,7 @@ void endingMessageEasy_init(endingMessageEasy* this) {
     // Sound ID "10" is silent in the final game
     ptr_play_sound(10);
     // Create textbox and initialize variables
-    new_textbox = ptr_textbox_create(this, D_8009B450, 0x08200000);
+    new_textbox = ptr_textbox_create(this, D_8009B450, (OPEN_TEXTBOX | FAST_TEXT_TRANSITION));
     this->ending_textbox = new_textbox;
     ptr_textbox_setPos(new_textbox, 30, 110, 1);
     ptr_textbox_setDimensions(new_textbox, 6, 250, 0, 0);
