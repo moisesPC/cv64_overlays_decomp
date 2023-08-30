@@ -52,6 +52,9 @@ $(OVERLAYS):
 	@echo "\n== Converting ELF to overlay =="
 	$(NOVL) -c -o build/$@/$@.ovl build/$@/$@.elf
 
+	@echo "\n== Saving symbolic information... =="
+	$(READELF) --all build/$@/$@.elf > build/$@/$@.elf.txt
+
 	@echo "\n== Verifying =="
 	@cd sha1
 	@$(SHA1SUM) -c sha1/$@.sha1
