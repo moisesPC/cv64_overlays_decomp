@@ -22,7 +22,7 @@ READELF = readelf
 
 #### Options ####
 # Includes
-INCLUDES := -Iinclude
+INCLUDES := -Iinclude -Iinclude/game -Iinclude/ultra64 -Iinclude/game/modules
 
 # Compiler flags
 CFLAGS = -G0 -mips2 -non_shared -fullwarn -verbose -Xcpluscomm -Wab,-r4300_mul $(INCLUDES)

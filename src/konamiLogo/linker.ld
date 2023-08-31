@@ -1,6 +1,6 @@
 /* Credits to the z64ovl repo for their linker script example: https://github.com/CrookedPoe/z64ovl */
 
-INCLUDE src/endingMessageEasy/entrypoint.ld
+INCLUDE src/konamiLogo/entrypoint.ld
 INCLUDE extern.ld
 
 /* Libaries here -- add your own if you need to */

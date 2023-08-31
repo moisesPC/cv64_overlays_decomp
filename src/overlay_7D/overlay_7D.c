@@ -1,7 +1,7 @@
 /*
  * File: overlay_7D.c
  * Description:
- * Associated modules: 0xA3, 0xA4, 0xA5
+ * Associated modules: 0x20A3, 0x20A4, 0x20A5
  * 
  * osMapTLB'd? = Yes
  * Entrypoint address = 0x0F000000
@@ -12,34 +12,16 @@
 
 #include "overlay_7D.h"
 
-void moduleA3_calc(moduleA3* this) {
-    s16 temp;
-    
-    temp = this->header.functionInfo_ID + 1;
-    this->header.functionInfo_ID = temp,
-    this->header.current_function[temp].timer++;
-    (*modules_163_164_165_functions[this->header.current_function[temp].function])(this);
-    this->header.functionInfo_ID--;
+void moduleA3_entrypoint(moduleA3* self) {
+    ENTER(self, modules_163_164_165_functions);
 }
 
-void moduleA4_calc(moduleA4* this) {
-    s16 temp;
-    
-    temp = this->header.functionInfo_ID + 1;
-    this->header.functionInfo_ID = temp,
-    this->header.current_function[temp].timer++;
-    (*modules_163_164_165_functions[this->header.current_function[temp].function])(this);
-    this->header.functionInfo_ID--;
+void moduleA4_entrypoint(moduleA4* self) {
+    ENTER(self, modules_163_164_165_functions);
 }
 
-void moduleA5_calc(moduleA5* this) {
-    s16 temp;
-    
-    temp = this->header.functionInfo_ID + 1;
-    this->header.functionInfo_ID = temp,
-    this->header.current_function[temp].timer++;
-    (*modules_163_164_165_functions[this->header.current_function[temp].function])(this);
-    this->header.functionInfo_ID--;
+void moduleA5_entrypoint(moduleA5* self) {
+    ENTER(self, modules_163_164_165_functions);
 }
 
-void func_0F000150(void* this) {}
+void func_0F000150(void* self) {}

@@ -1,6 +1,6 @@
 # Castlevania 64 - Overlays Decompilation
 
-This repository contains examples of decompiled source code of Castlevania (Nintendo 64) overlays.
+This repository contains decompiled source code of Castlevania (Nintendo 64) overlays.
 
 These will compile into matching overlay binaries that can be found in the ROM (when decompressed).
 
@@ -13,6 +13,8 @@ The code in this repository corresponds to the USA v1.0 version of the game.
 * `mips64-ld`
 
 ### Build
+* Clone this repository using `git clone --recursive`
+
 * Run `make` to build all overlays in `src`. The final overlay binaries will be stored in `build/OVERLAY_NAME/OVERLAY_NAME.ovl`
 
 * When each overlay is created, the sha1 of each .ovl file will be verified to see if it matches with the (decompressed) overlays from an original USA v1.0 ROM. If it does, `OK` will be printed.

@@ -1,7 +1,7 @@
 /*
  * File: endingMessageEasy.c
  * Description: Displays the ending message when you beat Easy Mode
- * Associated modules: 0x140
+ * Associated modules: 0x2140
  * 
  * osMapTLB'd? = Yes
  * Entrypoint address = 0x0F000000
@@ -10,76 +10,73 @@
  *   0xBB (Overlay)
  */
 
-#include "game/unknown_struct.h"
-#include "game/model_info.h"
-#include "endingMessageEasy.h"
+#include "unknown_struct.h"
+#include "gfx/model_info.h"
+#include "gfx/camera.h"
+#include "sound.h"
+#include "atari_work.h"
+#include "menus/endingMessageEasy.h"
 
 /* Entrypoint function.
- * This function is used to access a specific function in the "endingMessageEasy_functions" array,
+ * self function is used to access a specific function in the "endingMessageEasy_functions" array,
  * by referencing its ID within said array.
  */
-void endingMessageEasy_calc(endingMessageEasy* this) {
-    s16 temp;
-    
-    temp = this->header.functionInfo_ID + 1;
-    this->header.functionInfo_ID = temp,
-    this->header.current_function[temp].timer++;
-    (*endingMessageEasy_functions[this->header.current_function[temp].function])(this);
-    this->header.functionInfo_ID--;
+void endingMessageEasy_entrypoint(endingMessageEasy* self) {
+    ENTER(self, endingMessageEasy_functions);
 }
 
 // Initializes the textbox
 // https://decomp.me/scratch/Gr6E6
-void endingMessageEasy_init(endingMessageEasy* this) {
-    textbox* new_textbox;
+void endingMessageEasy_init(endingMessageEasy* self) {
+    mfds_state* new_textbox;
     s32 text_ptr;
     
     u8 (*ptr_play_sound)(u16) = play_sound;
-    textbox* (*ptr_textbox_create)(void*, void*, u32) = textbox_create;
-    void (*ptr_textbox_setDimensions)(textbox*, s8, s16, u8, u8) = textbox_setDimensions;
-    void (*ptr_textbox_setPos)(textbox*, u16, u16, s32) = textbox_setPos;
-    void (*ptr_textbox_setMessagePtr)(textbox*, u16*, s32, s16) = textbox_setMessagePtr;
-    void (*ptr_textbox_8012cda4)(textbox*, u32, f32) = textbox_8012cda4;
+    mfds_state* (*ptr_textbox_create)(void*, void*, u32) = textbox_create;
+    void (*ptr_textbox_setDimensions)(mfds_state*, s8, s16, u8, u8) = textbox_setDimensions;
+    void (*ptr_textbox_setPos)(mfds_state*, u16, u16, s32) = textbox_setPos;
+    void (*ptr_textbox_setMessagePtr)(mfds_state*, u16*, s32, s16) = textbox_setMessagePtr;
+    void (*ptr_textbox_8012cda4)(mfds_state*, u32, f32) = textbox_8012cda4;
     void* (*ptr_text_getMessageFromPool) (u16*, s32) = text_getMessageFromPool;
-    void (*ptr_goToNextFunc)(s8*, s16*) = goToNextFunc;
+    void (*ptr_goToNextFunc)(u16[], s16*) = goToNextFunc;
     
     // Sound ID "10" is silent in the final game
     ptr_play_sound(10);
     // Create textbox and initialize variables
-    new_textbox = ptr_textbox_create(this, D_8009B450, (OPEN_TEXTBOX | FAST_TEXT_TRANSITION));
-    this->ending_textbox = new_textbox;
+    new_textbox = ptr_textbox_create(self, common_cameras_array.HUD, (OPEN_TEXTBOX | FAST_TEXT_TRANSITION));
+    self->ending_textbox = new_textbox;
     ptr_textbox_setPos(new_textbox, 30, 110, 1);
     ptr_textbox_setDimensions(new_textbox, 6, 250, 0, 0);
     new_textbox->color_palette = 0;
-    new_textbox->textbox_display_time = 0;
+    new_textbox->display_time = 0;
     /* Get the offset within the overlay where the text is located.
-     * Don't grab the most significant byte (& 0xFFFFFF). This removes the "0x0F" part from the address.
+     * Don't grab the most significant byte (& 0xFFFFFF). self removes the "0x0F" part from the address.
      */
     text_ptr = (s32)ptr_text_getMessageFromPool(ending_text, 0) & 0xFFFFFF;
-    ptr_textbox_setMessagePtr(new_textbox, (s32)file_buffer + text_ptr, 0, 0);
+    ptr_textbox_setMessagePtr(new_textbox, (s32) endingMessage_fileBuffer + text_ptr, 0, 0);
     ptr_textbox_8012cda4(new_textbox, 0x40035, 30);
-    ptr_goToNextFunc((s8*)this->header.current_function, &this->header.functionInfo_ID);
+    ptr_goToNextFunc(self->header.current_function, &self->header.functionInfo_ID);
 }
 
 // Unused
 void func_0F00018C() {}
 
-/* After the textbox structure is initialized, the game loops in this function
+/* After the textbox structure is initialized, the game loops in self function
  * until the player presses the A button to close the textbox
  */
-void endingMessageEasy_loop(endingMessageEasy* this) {
+void endingMessageEasy_loop(endingMessageEasy* self) {
     s16 i;
-    u32* textbox_flags = &this->ending_textbox->flags;
+    u32* textbox_flags = &self->ending_textbox->flags;
     
-    void (*D_80040570)() = func_80040570;
-    void (*ptr_goToNextFunc)(s8* functionLoadMgr, s16* functionInfo_ID) = goToNextFunc;
+    void (*ptr_atari_work_table_init)() = atari_work_table_init;
+    void (*ptr_goToNextFunc)(u16[], s16*) = goToNextFunc;
 
-    this->active_time++;
+    self->active_time++;
     /* After 120 frames have passed (the time it takes for the red cursor to appear),
      * if the player presses the A button, close the textbox, reset most variables
-     * in the gameplay's save struct, and destroy this module.
+     * in the gameplay's save struct, and destroy self module.
      */
-    if ((this->active_time > 120) && (D_80383AB8.controllers[0].buttons_pressed & A_BUTTON)) {
+    if ((self->active_time > 120) && (D_80383AB8.controllers[0].buttons_pressed & BTN_A)) {
         *textbox_flags |= CLOSE_TEXTBOX;
         D_80383AB8.SaveStruct_gameplay.money = 0;
         D_80383AB8.SaveStruct_gameplay.time_saved_counter = 0;
@@ -102,7 +99,7 @@ void endingMessageEasy_loop(endingMessageEasy* this) {
         D_80383AB8.current_PowerUp_level = 0;
         D_80383AB8.SaveStruct_gameplay.health_depletion_rate_while_poisoned = 0;
         D_80383AB8.SaveStruct_gameplay.current_hour_VAMP = 0;
-        D_80383AB8.SaveStruct_gameplay.weeks_passed = 0;
+        D_80383AB8.SaveStruct_gameplay.week = 0;
         D_80383AB8.SaveStruct_gameplay.day = 0;
         D_80383AB8.SaveStruct_gameplay.hour = 0;
         D_80383AB8.SaveStruct_gameplay.minute = 0;
@@ -118,25 +115,25 @@ void endingMessageEasy_loop(endingMessageEasy* this) {
         for (i = 0; i < 64; i++) {
             D_80363AB8[1].SaveStruct_gameplay.inventory_items_amount[i - 4] = 0;
         }
-        D_80040570();
-        this->active_time = 0;
-        ptr_goToNextFunc((s8*)this->header.current_function, &this->header.functionInfo_ID);
+        ptr_atari_work_table_init();
+        self->active_time = 0;
+        ptr_goToNextFunc(self->header.current_function, &self->header.functionInfo_ID);
     }
 }
 
 // Destroy the module
-void endingMessageEasy_destroy(endingMessageEasy* this) {
+void endingMessageEasy_destroy(endingMessageEasy* self) {
     u32 textbox_flags;
     
-    this->active_time++;
+    self->active_time++;
     // When the textbox closes (after 30 frames), destroy the module
-    if (this->active_time > 30) {
-        textbox_flags = this->ending_textbox->flags;
+    if (self->active_time > 30) {
+        textbox_flags = self->ending_textbox->flags;
         if (!(textbox_flags & 0x20000000) && !(textbox_flags & 0x10000000) && !(textbox_flags & 0x02000000)) {
             if (!(textbox_flags & TEXTBOX_IS_ACTIVE)) {
-                this->ending_textbox->flags = textbox_flags | CLOSE_TEXTBOX;
+                self->ending_textbox->flags = textbox_flags | CLOSE_TEXTBOX;
             }
-            this->header.destroy(this);
+            self->header.destroy(self);
         }
     }
 }
