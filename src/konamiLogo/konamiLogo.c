@@ -46,11 +46,11 @@ void konamiLogo_init(konamiLogo* self) {
     self->model = model;
     model->dlist = &KONAMI_LOGO_DL;
     model->assets_file_ID = 0x5D;
-    model->size.x = Konami_logo_size_X;
-    model->size.y = Konami_logo_size_Y;
-    background_color.color_u32 = 0x000000FF;            // Black (opaque)
+    model->size.x = 0.9975f;
+    model->size.y = 1.005f;
+    D_80383AB8.background_color.color_u32 = 0x000000FF;            // Black (opaque)
     model->flags |= 0x800;
-    model->primitive_color.color_u32 = 0xFFFFFF00;        // White (transparent)
+    model->primitive_color.color_u32 = 0xFFFFFF00;                 // White (transparent)
 
     GO_TO_NEXT_FUNC(self, konamiLogo_functions, curFunc, ptr_goToNextFunc);
 }
@@ -103,7 +103,7 @@ void konamiLogo_KCEK_fade_in(konamiLogo* self) {
     model_info* model = self->model;
     void (*ptr_goToNextFunc)(u16[], s16*) = goToNextFunc;
     
-    model->size.x = KCEK_logo_size_X;
+    model->size.x = 0.995f;
     model->dlist = &KCEK_LOGO_DL;
     if (model->primitive_color.color_u8.A < 0xFC) {
         model->primitive_color.color_u8.A += 0x03;
@@ -119,7 +119,7 @@ void konamiLogo_KCEK_wait(konamiLogo* self) {
     model_info* model = self->model;
     void (*ptr_goToNextFunc)(u16[], s16*) = goToNextFunc;
 
-    model->size.x = KCEK_logo_size_Y;
+    model->size.x = 0.995f;
     if (model->primitive_color.color_u8.A < 0xFC) {
         model->primitive_color.color_u8.A += 0x03;
     }
