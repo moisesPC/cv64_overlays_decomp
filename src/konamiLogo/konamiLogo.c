@@ -7,7 +7,7 @@
  * Entrypoint address = 0x801CFCD0
  * Associated files ptr = 0x800958C0
  * Associated files:
- *   0x6B4FC0 - 0x6B5480 (Overlay - Konami / KCEK logo screen)
+ *   0x6B4FC0 - 0x6B5480 (Overlay)
  */
 
 #include "engine/game_states/konamiLogo/konamiLogo.h"
@@ -16,10 +16,6 @@
 #include "gfx/color.h"
 #include "gamestate.h"
 
-/* Entrypoint function.
- * self function is used to access a specific function in the "endingMessageEasy_functions" array,
- * by referencing its ID within said array.
- */
 void konamiLogo_entrypoint(konamiLogo* self) {
     ENTER(self, konamiLogo_functions);
 }

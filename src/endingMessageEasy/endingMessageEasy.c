@@ -18,7 +18,7 @@
 #include "menus/endingMessageEasy.h"
 
 /* Entrypoint function.
- * self function is used to access a specific function in the "endingMessageEasy_functions" array,
+ * This function is used to access a specific function in the "endingMessageEasy_functions" array,
  * by referencing its ID within said array.
  */
 void endingMessageEasy_entrypoint(endingMessageEasy* self) {
@@ -108,12 +108,12 @@ void endingMessageEasy_loop(endingMessageEasy* self) {
         // Clear event flags (doesn't appear to match with a 'for' loop)
         i = 0;
         do {
-            D_80363AB8[1].SaveStruct_gameplay.event_flags[i - 1] = 0,
+            D_80363AB8[1].SaveStruct_gameplay.event_flags[i] = 0,
             i++;
         } while (i < 16);
         // Remove inventory items
         for (i = 0; i < 64; i++) {
-            D_80363AB8[1].SaveStruct_gameplay.inventory_items_amount[i - 4] = 0;
+            D_80363AB8[1].SaveStruct_gameplay.inventory_items_amount[i] = 0;
         }
         ptr_atari_work_table_init();
         self->active_time = 0;
