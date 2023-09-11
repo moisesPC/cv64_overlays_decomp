@@ -43,8 +43,8 @@ void creditsMgr_init(creditsMgr* self) {
         for (i = 0; i < 16; i++) {
             self->field_0x34[i] = 0;
         }
-        if (ptr_moduleList_findFirstModuleByID(CUTSCENE__CUTSCENE_MGR) == NULL) {
-            ptr_module_createAndSetChild(self, CUTSCENE__CUTSCENE_MGR);
+        if (ptr_moduleList_findFirstModuleByID(CUTSCENE_CUTSCENE_MGR) == NULL) {
+            ptr_module_createAndSetChild(self, CUTSCENE_CUTSCENE_MGR);
         }
         D_80383AB8.field25453_0x644c = 0;
         D_80383AB8.cutscene_ID = 0x63;
@@ -58,7 +58,7 @@ void creditsMgr_loop(creditsMgr* self) {
     void* (*ptr_moduleList_findFirstModuleByID)(u16) = moduleList_findFirstModuleByID;
     void (*ptr_goToNextFunc)(u16[], s16*) = goToNextFunc;
     
-    if (D_80383AB8.cutscene_ID == 0 && ptr_moduleList_findFirstModuleByID(CUTSCENE__CUTSCENE_CREDITS) == NULL) {
+    if (D_80383AB8.cutscene_ID == 0 && ptr_moduleList_findFirstModuleByID(CUTSCENE_CUTSCENE_CREDITS) == NULL) {
         self->field_0x34[3] = 2;
         if (1) {}                   // Needed for matching
 
