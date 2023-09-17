@@ -26,7 +26,7 @@ void konamiLogo_checkButtonPress(konamiLogo* self) {
     if ((D_80383AB8.controllers[0].buttons_pressed  |
          D_80383AB8.controllers[1].buttons_pressed  |
          D_80383AB8.controllers[2].buttons_pressed  |
-         D_80383AB8.controllers[3].buttons_pressed) & RECENTER_BUTTON) {
+         D_80383AB8.controllers[3].buttons_pressed) & (BTN_START | BTN_RECENTER)) {
         ptr_goToFunc(self->header.current_function, &self->header.functionInfo_ID, KCEK_WAIT);
     }
 }

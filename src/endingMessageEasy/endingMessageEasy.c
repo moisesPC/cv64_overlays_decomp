@@ -92,7 +92,7 @@ void endingMessageEasy_loop(endingMessageEasy* self) {
         D_80383AB8.SaveStruct_gameplay.field79_0xd4 = 0;
         D_80383AB8.SaveStruct_gameplay.field83_0xd8 = 0;
         D_80383AB8.SaveStruct_gameplay.money_spent_on_Renon = 0;
-        D_80383AB8.SaveStruct_gameplay.player_flags = 0;
+        D_80383AB8.SaveStruct_gameplay.player_status = 0;
         D_80383AB8.SaveStruct_gameplay.life = 100;
         D_80383AB8.SaveStruct_gameplay.field13_0x5c = 100;
         D_80383AB8.SaveStruct_gameplay.subweapon = 0;
