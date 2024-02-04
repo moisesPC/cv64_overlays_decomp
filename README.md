@@ -1,5 +1,8 @@
 # Castlevania 64 - Overlays Decompilation
 
+> [!NOTE]
+> This repository is now outdated. See the [decompilation project](https://github.com/blazkowolf/cv64) for an updated repository.
+
 This repository contains decompiled source code of Castlevania (Nintendo 64) overlays.
 
 These will compile into matching overlay binaries that can be found in the ROM (when decompressed).
